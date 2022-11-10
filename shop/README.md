@@ -1,50 +1,100 @@
 # 쇼핑몰 만들기 - 리액트 프로젝트
 
 ## 리액트는 왜 쓰는가
+
 - 새로고침 없이 부드럽게 작동하는 싱글페이지 어플리케이션을 만들기 위해서임.
 - 리액트 장점
     - html 재사용이 편리하다.
     - 같은 문법으로 앱 개발도 가능함
 
-
+<br><br>
 
 ## 리액트 개발환경 세팅
+
 1. Node.js 설치
 2. 디렉토리를 하나 만들어서 해당 디렉토리에 터미널 열고 아래의 명령어를 실행시킨다.
-  - create React app 이라는 라이브러리 설치하는 명령어이다. 이 라이브러리는 리액트 프로젝트를 쉽게 생성해주는 친구이다.  
-  - 수동으로 해도 되지만, npm 으로 하는게 편함. 
+
+- create React app 이라는 라이브러리 설치하는 명령어이다. 이 라이브러리는 리액트 프로젝트를 쉽게 생성해주는 친구이다.
+- 수동으로 해도 되지만, npm 으로 하는게 편함.
+
 ```
 sudo npx create-react-app 작명
 ```
+
 3. 그러면 디렉토리 안에 내가 작명한 이름으로 폴더가 하나 생김. 해당 폴더를 에디터에 프로젝트 임포트 해준다(열어준다)
 
-4. 해당 리포지토리 src > App.js 파일이 메인으로 사용할 거시기이다. 
+4. 해당 리포지토리 src > App.js 파일이 메인으로 사용할 거시기이다.
 
-5. 터미널에서 npm start 명령어 입력하면 라이브서버처럼 미리보기 화면이 뜬다. 
+5. 터미널에서 npm start 명령어 입력하면 라이브서버처럼 미리보기 화면이 뜬다.
 
 6. 생성된 프로젝트 폴더 설명
-  - npm_modules 폴더 : 각종 라이브러리들 모아둔 폴더
-  - public 폴더 : static 에 들어갈 파일들 저장하는곳 (html,css,images)
-  - src 폴더 : 메인 소스 코드 보관 폴더
-  - package.json : 프로젝트 정보들 기입되어있는 파일. 
-  - 
 
+- npm_modules 폴더 : 각종 라이브러리들 모아둔 폴더
+- public 폴더 : static 에 들어갈 파일들 저장하는곳 (html,css,images)
+- src 폴더 : 메인 소스 코드 보관 폴더
+- package.json : 프로젝트 정보들 기입되어있는 파일.
 
+## JSX 언어
 
+- 리액트는 html 에 퍼블리싱을 하는게 아니고 js 파일에서 퍼블리싱을 하는데, 이떄 사용되는 언어가 jsx 언어라는 것임.
+- 그냥 html 하고 거의 동일하다고 생각하면 된다.
+- 이걸 쓰는 이유 원래 리액트에서 html 엘리먼트를 만들려면 아래 처럼 만들어야 하는데, 굳이 이렇게 안하고 간단하게 만들어 줄 수
+  있기 때문임.
 
+```
+React.createElement('div',null,'hello world') 
+```
 
+- JSX 에서 태그에 클래스를 사용하려면, className 으로 해야된다.
+- {}중괄호 문법 (데이터 바인딩)
+    - react 에서는 변수수를 태그내에 넣기 위해서는, 그냥 태그에서 중괄호를 열고 변수명을 넣어주면 된다. ES6 에서 ${}하고 비슷한 느낌이다.
+    - 모든곳에서 다 사용할 수 있음.
+- 스타일을 태그에 바로 넣어줘도 되는데, JSX에서는 중괄호로 쳐줘야함
 
+```
+style={{color: 'red', fontSize : '16px'}}
 
+특징 1. 중괄호 안에 중괄하
+특징 2. 값을 따옴표 안에 넣어야됨
+특징 3. 원래 font-size 와 같이 하이푼을 쓰던것드은, 하이푼을 지우고 카멜케이스로 작성해줘야함. 
+```
 
+## Layout 만들기
 
+- App.js 에있는 App() 이라는 함수 내의 return 값에 이제 JSX 언어를 통해서 html 태그들을 만드는데
+  한가지 유의할점은, return 안에 들어가는 첫번째 div 안에 모든걸 다 짜야한다. 영역을 나눠서 할 수 없음. 그러니까
+  하나의 컴포넌트만 만들어야 된다는것과 동일함.
 
+## State 란?
 
+- 리액트에서 많이 사용되는 단어임
+- 보통 우리는 자료 저장을 변수에 하는데, 리액트에는 state 라는 문법도 있다.
+- state 를 사용하기 위해선 우선 파일 상단에 임포트를 시켜줘야 한다
+- 그리고 화면 그리는 펑션 안에 useState(); 선언해줘야함 
+- state 에 저장된 데이터를 사용하려면 변수 선언 키워드와 데이터를 뽑는 함수를 지정해줘야된다.
 
+```
+import { useState } from 'react';
 
+function App(){
+  let [작명1, 작명2] = useState('저장하고싶은 데이터');
+  //작명 1은 스테이트에 저장된 갑이고 작명2는 state 변경을 도와주는 함수이다. 
+  //위의 작명은 ES6 의 Distructuring 이다. 
 
+  
+  return ( 
+    <div> {작명1} </div>
+  )    
+}
+```
 
+**_왜 굳이 state 를 사용하는가_**
+- 일반적으로 변수에 집어넣은 데이터를, 화면에 뿌려줄때, 갑자기 데이터가 변경된다면 클라이언트 단에서 새로고침 없이 바로 수정해주지 않는다.
+근데 state 는 그게 가능하도록 해주기 때문에 사용한다.
 
+<br><br>
 
+**State 변경 하는법**
 
 
 
@@ -71,75 +121,3 @@ sudo npx create-react-app 작명
 
 
 
-
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

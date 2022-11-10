@@ -1,25 +1,29 @@
 import logo from './logo.svg';
 import './App.css';
+import {useState} from 'react';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    let [title, change] = useState(['기초수업', '심화수업', '리액트수업']);
+    return (
+        <div className="App">
+            <div className={"nav"}>
+                <h4 className="navTitle">블로그</h4>
+            </div>
+            <div className={"list"}>
+                <h4>{title[0]}</h4>
+                <p>10월 17일 발행</p>
+            </div>
+            <div className={"list"}>
+                <h4>{title[1]}</h4>
+                <p>10월 31일 발행</p>
+            </div>
+            <div className={"list"}>
+                <h4>{title[2]}</h4>
+                <p>11월 14일 발행</p>
+            </div>
+        </div>
+    );
 }
 
 export default App;
