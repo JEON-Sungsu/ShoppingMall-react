@@ -1,4 +1,5 @@
 # 쇼핑몰 만들기 - 리액트 프로젝트
+<br><br>
 
 ## 리액트는 왜 쓰는가
 
@@ -34,6 +35,8 @@ sudo npx create-react-app 작명
 - src 폴더 : 메인 소스 코드 보관 폴더
 - package.json : 프로젝트 정보들 기입되어있는 파일.
 
+<br><br>
+
 ## JSX 언어
 
 - 리액트는 html 에 퍼블리싱을 하는게 아니고 js 파일에서 퍼블리싱을 하는데, 이떄 사용되는 언어가 jsx 언어라는 것임.
@@ -59,11 +62,15 @@ style={{color: 'red', fontSize : '16px'}}
 특징 3. 원래 font-size 와 같이 하이푼을 쓰던것드은, 하이푼을 지우고 카멜케이스로 작성해줘야함. 
 ```
 
+<br><br>
+
 ## Layout 만들기
 
 - App.js 에있는 App() 이라는 함수 내의 return 값에 이제 JSX 언어를 통해서 html 태그들을 만드는데
   한가지 유의할점은, return 안에 들어가는 첫번째 div 안에 모든걸 다 짜야한다. 영역을 나눠서 할 수 없음. 그러니까
   하나의 컴포넌트만 만들어야 된다는것과 동일함.
+
+<br><br>
 
 ## State 란?
 
@@ -145,12 +152,58 @@ function App(){
   1. state를 가져오려면 좀 불편해짐. 
 
 
-
+<br><br>
 
 ## 동적인 UI 만드는 step
   1. 미리 디자인 만듬
   2. UI 의 현재 상태를 state 로 저장
   3. state 에 따라 UI 가 어떻게 보일지 작성 
+
+
+<br><br>
+
+
+## Map 함수 
+- 반복문 
+- 모든 배열 뒤에 사용 가능하다. 
+- forEach랑 비슷함 
+- return 값을 넣으면 Array에 담아서 반환해줌. 
+  - forEach 와 동일하니, 배열의 인덱스 수만큼 return값 뱉어냄 
+
+```
+  const arr = [1,2,3,4]
+  
+  arr.map(function(item){
+      return '1234' //['1234','1234','1234','1234']
+    }
+  )
+  
+```
+<br><br>
+
+## 같은 HTML 만들기 
+- return 값 내부 html 태그 내에서 어떤 함수를 쓰려면 중괄호를 열어서 그안에다가 작성해주면 된다. 
+- 근데 여기서는 일반적인 반복문은 사용못하고 Map 함수만 사용 가능하다. 
+- 리액트에서는 배열안에 html 태그를 담아도 잘 보여줌 
+- map 함수의 return 에 html 태그를 넣을때, 여러줄 길어지게 된다면 return () 소괄호 안에 넣어줘야 한다.
+- 또, react 에서 반복문을 통해서 태그를 생성하면, 각 태그마다 고유의 키값을 가져야 한다. 안그러면 콘솔창에서 자꾸 경고메세지 뜸
+에러까지는 아니지만.. 뭐 여튼 그래서 보통 인덱스로 키값을 넣는다고 한다. 자유롭게 해도 상관은 없음. 
+
+
+```
+ {
+   title.map(function(item,index){
+        return (
+            <div className={"list"} key={index}>
+                <h4>{ item } <span>👍</span> { like }</h4>
+                <p>10월 31일 발행</p>
+            </div>
+        )
+    })
+ }
+```
+
+<br><br>
 
 
 ## 유용한 문법들 
@@ -174,6 +227,7 @@ function Main() {
 }
 ```
 
+<br><br>
 
 ## 기타 팁
 - /* eslint-disable */ 파일 최 상단에 입력하면 터미널에 warning 안뜸. 

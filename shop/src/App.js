@@ -5,11 +5,17 @@ import {useState} from 'react';
 
 function App() {
 
-    let [title, change] = useState(['기초수업', '심화수업', '리액트수업','Java','Spring','vueJS']);
-    let [like, likeChange] = useState(0);
-    let [modal, setModal ] = useState('hide')
+    let [title, change] = useState(['기초수업', '심화수업', '리액트수업', 'Java', 'Spring', 'vueJS']);
+    let [like, setLikeCounter] = useState([0,0,0,0,0,0]);
+    let [modal, setModal] = useState('hide');
 
-    function titleSorting(){
+    function likeCounting(index){
+        const counting = [...like];
+        counting[index]++
+        setLikeCounter(counting);
+    }
+
+    function titleSorting() {
         const ordering = [...title];
         ordering.sort();
         change(ordering);
@@ -24,7 +30,7 @@ function App() {
             <button onClick={titleSorting}>ㄱㄴㄷ순 정렬</button>
             <button>강의 변경</button>
 
-            <div className={"list"}>
+            {/*<div className={"list"}>
                 <h4>{title[0]} <span onClick={() => {likeChange(like++)}} >👍</span> { like }</h4>
                 <p>10월 17일 발행</p>
             </div>
@@ -37,10 +43,21 @@ function App() {
                     setModal('show')
                 }}>{title[2]} <span>👍</span> { like }</h4>
                 <p>11월 14일 발행</p>
-            </div>
+            </div>*/}
 
             {
                 modal == 'show' ? <Modal/> : null
+            }
+
+            {
+                title.map(function (a, b) {
+                    return (
+                        <div className={"list"} key={b}>
+                            <h4>{a} <span onClick={() => {likeCounting(b)}}>👍</span> {like[b]}</h4>
+                            <p>10월 31일 발행</p>
+                        </div>
+                    )
+                })
             }
 
         </div>
@@ -56,6 +73,5 @@ function Modal() {
         </div>
     )
 }
-
 
 export default App;
