@@ -72,6 +72,7 @@ style={{color: 'red', fontSize : '16px'}}
 - state 를 사용하기 위해선 우선 파일 상단에 임포트를 시켜줘야 한다
 - 그리고 화면 그리는 펑션 안에 useState(); 선언해줘야함 
 - state 에 저장된 데이터를 사용하려면 변수 선언 키워드와 데이터를 뽑는 함수를 지정해줘야된다.
+- 평범한 변수 선언 처럼 배열이나 객체도 가능 
 
 ```
 import { useState } from 'react';
@@ -81,6 +82,7 @@ function App(){
   //작명 1은 스테이트에 저장된 갑이고 작명2는 state 변경을 도와주는 함수이다. 
   //위의 작명은 ES6 의 Distructuring 이다. 
 
+  let [작명3, 작명4] = useState([배열,배열2,배열3])
   
   return ( 
     <div> {작명1} </div>
@@ -95,10 +97,86 @@ function App(){
 <br><br>
 
 **State 변경 하는법**
+- 스테이트는 등호로 변경하면 안된다. 스테이트를 선언할때 기입한 두번째 변경함수를 사용해야만 딘다. 
+- 변경함수(변경할값)
+```
+  let [like, likeChange] = useState(0);
+  
+  <h4>{title[0]} <span onClick={ () => { likeChnage(like++) } } >👍</span> { like }</h4>
+```
+- 변경함수로 배열,객체 등을 변경하는법
+  - 무조건 state 를 Spread Operator 로 복사를 한 다음에, 새로 복사한 배열,객체의 값을 바꾸고, 기존 스테이트에
+  다시 복사한 데이터를 넣어주어야 한다.
+
+```
+  let [title, change] = useState(['기초수업', '심화수업', '리액트수업','Java','Spring','vueJS']);
+
+  function(){
+    let copy = [...title] //복사한 데이터
+    copy[0] = '바꾸고싶은 값' //복사한 데이터에서 변경하고자 하는 값을 바꿔줌 
+    change(copy); //변경된 배열을 통채로 기존 state 에 값으로 넣어줌. 
+  }
+```
+- state 변경 함수 특징
+  - 기존 state 와 신규 state의 값이 동일하다면 변경해주지 않음. (일종의 에너지 절약임 )
+  - array/object 특징 
+    - reference data type 이라서 ... 써야됨. 잘 모르겠으면 스크립트 심화 강의 복습하기. 
+
+
+## Component 문법
+- html 을 한단위로 묶어버리는 React 전용 문법
+  1. function 만들고 (펑션의 이름은 대문자로 시작해야됨) 변수에 집어 넣어도 상관은 없음. 
+  2. return() 내부에 html 담기 
+  3. <함수명></함수명> 으로 사용하거나 그냥 바로 닫아도 된다. <함수명/> 
+
+```
+<div className={modal}>
+    <h4>제목</h4>
+    <p>날짜</p>
+    <p>상세내용</p>
+</div>
+```
+- 컴포넌트를 만들어쓰면 좋은 케이스
+  1. 반복적인 html 을 사용할 때 
+  2. 큰 페이지들
+  3. 자주 변경될만한 것들 
+
+- 컴포넌트의 단점 
+  1. state를 가져오려면 좀 불편해짐. 
 
 
 
 
+## 동적인 UI 만드는 step
+  1. 미리 디자인 만듬
+  2. UI 의 현재 상태를 state 로 저장
+  3. state 에 따라 UI 가 어떻게 보일지 작성 
+
+
+## 유용한 문법들 
+- React 에서 onCLick 쓸때에, 일반 html 과 다르게 카멜케이스로 작성해야 하고,함수 호출시 소괄호를 넣지 않음. 
+
+- HTML 을 그려주는 함수 내부의 return 안에서는, 병렬구조의 태그가 들어갈 수없다. 그래서 wrap 의 역할과 비슷하게, 전체를
+한 덩어리로 만들어줘야 하는데, 굳이 의미없늰 div 를 쓰기 싫으면 <></> 비어있는 태그만 넣어도 리액트에서는 잘 작동한다. 
+
+- React return 문 안에서 if 문을 쓰려면 삼항연산자를 쓰면 된다. 
+- return문 안에서 if 문을 쓰려면 중괄호를 열어서 그안에다가 작성하면 된다. 
+```
+function Main() {
+  return (
+    <div>
+      {
+        조건식 ? 참일때 실행할 코드 : 거짓일때 실행할 코드; 
+        modal == 'show' ? <Modal/> : null
+      }
+    </div>
+  )
+}
+```
+
+
+## 기타 팁
+- /* eslint-disable */ 파일 최 상단에 입력하면 터미널에 warning 안뜸. 
 
 
 
