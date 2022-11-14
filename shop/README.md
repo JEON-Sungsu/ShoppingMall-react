@@ -253,8 +253,33 @@ function Modal(props) {
 ```
 <input onChange ={(e) => {e.target.value}}></input>
 ```
+<br><br>
 
+## 옛날 Class 문법
+- 요즘은 잘 안쓴다고 함
+- 그냥 자바스크립트랑 다르게 반드시 constructor,super,render 3가지 함수가 다 들어가야 된다. 
+- 근데 복잡하니깐 ... 요즘은 그냥 펑션만 쓴다. 
+```
+class Modal2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      //state 만들기 
+      name : "kim",
+      age : 20,
+    }
+  }
+  
+  render(){
+    return (
+      <div> 하이 {this.state.name}
+        <button onClick ={ () => { this.setState({age : 21}) }}
+      </div>
+    )
+  }
+}
 
+```
 
 
 
@@ -290,22 +315,38 @@ function Main() {
 - useState 배열에 값 추가 및 삭제하는법 
 - 추가하기
   1. 스테이트 변경 함수를 사용하면 된다.
+  2. unshift 릁 통해서 카피본에 자료를 추가하고, 기존 state 값에 넣어준다.
   ```
   onClick ={ () => { 변경함수(배열이름 => [...배열이름, 추가할값] ) } }
+  
+  onClick ={ () => {
+      const copyArr = [...배열이름]
+      copyArr.unshift('추가할데이터')
+      변경함수(copyArr);
+   }
+  }
   ```
 - 삭제하기 
   1. filter 함수를 사용한다.
   2. filter 함수로 삭제할 녀석을 삭제해준다.
-  3. 삭제된 배열을 다시 변경함수로 useState 의 값을 바꿔준다. 
+  3. 삭제된 배열을 다시 변경함수로 useState 의 값을 바꿔준다.
+
+- 다른 삭제 방법
+  1. 카피본 만들기
+  2. 원하는 자료 삭제
+  3. state 변경
 
 ```
  newArr = arr.filter(function(item) {
     return item !== 'delete' //delete 라는 이름을 가지지 않은 애들을 모두 남기겠다라는 뜻임 즉 delete 라는 이름 가진애는 삭제한다는 말 
   }
-  
   변경함수(newArr)
-  
- )
+ } 
+ 
+ const copyArr = [...변경할배열]
+ copyArr.splice(item, 1); //반복문의 item을 넣어줌 
+ 변경함수(copyArr);
+ 
 ```
 
 

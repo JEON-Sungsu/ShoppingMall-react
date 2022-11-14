@@ -5,7 +5,7 @@ import {useState} from 'react';
 
 function App() {
 
-    let [title, change] = useState(['기초수업', '심화수업', '리액트수업', 'Java', 'Spring', 'vueJS']);
+    let [title, change] = useState(['기초수업', '심화수업', '리액트수업']);
     let [like, setLikeCounter] = useState([0,0,0,0,0,0]);
     let [modal, setModal] = useState('hide');
     let [modalTitle, setModalTitle] = useState(0);
@@ -61,7 +61,12 @@ function App() {
                 <input type={"text"} onChange={ (e) => {setValue(e.target.value)}  }></input>
                 <button type={"button"} onClick={
                     () => {
-                        change(title => [...title, inputVal])
+                        if (inputVal == ''){
+                            return
+                        } else {
+                            setLikeCounter(like => [...like, 0])
+                            change(title => [...title, inputVal])
+                        }
                     }
                 }>게시글 추가</button>
             </div>
