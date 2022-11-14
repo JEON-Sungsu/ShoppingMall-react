@@ -205,7 +205,61 @@ function App(){
 
 <br><br>
 
+## 부모 useState 사용하기
+- 메인 function 인 App 안에 작성된 변수나,함수나 기타 등등을 밖에서 사용하고 싶을때 
+- props 를 사용하면 된다. 
+  1. 부모 컴포넌트 내에, 자식 컴포넌트가 호출된 곳으로 가서 태그안에 부모 태그에서 사용할 state 이름을 적어준다. 
+  2. 자식 컴포넌트로 이동해서 props 파라미터를 추가해준다(작명은 마음대론데 보통 props로 한다. )
+  3. 파라미터.부모컴포넌트에서작명한이름 형태로 호출해서 사용할 수 있다. 
+- props 는 무조건 부모 to 자식으로만 되지 반대로나, 형제끼리도 안된다. 
+```
+function App (){
+  const [title, change] useState([1,2,3,4,5]);
 
+  function 함수명() {
+    console.log('hi')
+  }
+
+  <Modal titles = {title} color = "yellow" change = {change} />
+  <Modal 작명 = {사용할state 이름} />
+
+}
+
+
+function Modal(props) {
+    return (
+        <div className="modal" style={{background:props.color}}>
+            <h4>{props.titles[index]}</h4>
+            <p>날짜</p>
+            <p>상세내용</p>
+            <button type="button" onClick ={()=>{ props.change(변경할값) }}
+        </div>
+    )
+}
+```
+
+- props 는 인라인 태그 스타일에도 적용 가능함.
+- 일반 문자도 전송 가능함. 
+- 함수도 전송 가능하다. 
+- useState 의 state 변경 함수도 함수기 때문에 props 사용이 가능하다.  
+- state 는 컴포넌트들 중 최상위 컴포넌트에 만들어두는게 가장 좋다. 그래야 여러곳에서 props 를 통해 재사용이 가능하기 때문. 
+- 자식 컴포넌트에도 함수선언이나 뭐 다 가능하지만, 자식 to 부모방향으로는 props 가 되지 않는걸 알아둬야 함. 
+
+<br><br>
+
+## 사용자 입력값 다루기 (input)
+- HTML 문서에서 작성했을때와 다르게 input 은 반드시 닫는태그가 필요하다. 뿐만아니라 리액트에서는 모든 태가그 닫는태그가 필요함 
+- 인풋 입력값 가져오기 
+```
+<input onChange ={(e) => {e.target.value}}></input>
+```
+
+
+
+
+
+
+<br><br>
 ## 유용한 문법들 
 - React 에서 onCLick 쓸때에, 일반 html 과 다르게 카멜케이스로 작성해야 하고,함수 호출시 소괄호를 넣지 않음. 
 
@@ -227,10 +281,41 @@ function Main() {
 }
 ```
 
+- onClick 안에는 함수 여러개를 갖다가 넣어도 상관없다. 세미콜론으로 구분만 해주면 됨 
+```
+<h4 onClick={() => {modalOpen(); setModalTitle(b)}}>{a}</h4>
+```
+<br><br>
+
+- useState 배열에 값 추가 및 삭제하는법 
+- 추가하기
+  1. 스테이트 변경 함수를 사용하면 된다.
+  ```
+  onClick ={ () => { 변경함수(배열이름 => [...배열이름, 추가할값] ) } }
+  ```
+- 삭제하기 
+  1. filter 함수를 사용한다.
+  2. filter 함수로 삭제할 녀석을 삭제해준다.
+  3. 삭제된 배열을 다시 변경함수로 useState 의 값을 바꿔준다. 
+
+```
+ newArr = arr.filter(function(item) {
+    return item !== 'delete' //delete 라는 이름을 가지지 않은 애들을 모두 남기겠다라는 뜻임 즉 delete 라는 이름 가진애는 삭제한다는 말 
+  }
+  
+  변경함수(newArr)
+  
+ )
+```
+
+
 <br><br>
 
 ## 기타 팁
 - /* eslint-disable */ 파일 최 상단에 입력하면 터미널에 warning 안뜸. 
+- function App() 안에 작성한 함수들이 동작할때, App() 안에 있는 페이지 자체가 새로 그려지는것 같음.
+그래서 App 안에 어떤.. 페이지 로드시 실행되는 함수를 집어넣으면, 로드될때 두번 실행되고 뭔가 변화가 일어날떄 마다
+계속해서 그 함수가 실행되니깐 이러한 함수는 App 밖으로 빼는게 맞는것 같음. 
 
 
 

@@ -8,11 +8,13 @@ function App() {
     let [title, change] = useState(['기초수업', '심화수업', '리액트수업', 'Java', 'Spring', 'vueJS']);
     let [like, setLikeCounter] = useState([0,0,0,0,0,0]);
     let [modal, setModal] = useState('hide');
+    let [modalTitle, setModalTitle] = useState(0);
+    let [inputVal, setValue] = useState('');
 
     function likeCounting(index){
-        const counting = [...like];
-        counting[index]++
-        setLikeCounter(counting);
+        const likeArr = [...like];
+        likeArr[index]++
+        setLikeCounter(likeArr);
     }
 
     function titleSorting() {
@@ -21,55 +23,65 @@ function App() {
         change(ordering);
     }
 
+    function modalOpen(){
+        setModal('show')
+    }
+
+    function modalClose(){
+        setModal('hide')
+    }
+
     return (
-        <div className="App">
-            <div className={"nav"}>
+        <div className="App" >
+            <div className={"nav"} onClick={modalClose}>
                 <h4 className="navTitle">블로그</h4>
             </div>
 
             <button onClick={titleSorting}>ㄱㄴㄷ순 정렬</button>
-            <button>강의 변경</button>
 
-            {/*<div className={"list"}>
-                <h4>{title[0]} <span onClick={() => {likeChange(like++)}} >👍</span> { like }</h4>
-                <p>10월 17일 발행</p>
-            </div>
-            <div className={"list"}>
-                <h4>{title[1]} <span>👍</span> { like }</h4>
-                <p>10월 31일 발행</p>
-            </div>
-            <div className={"list"}>
-                <h4 onClick={()=>{
-                    setModal('show')
-                }}>{title[2]} <span>👍</span> { like }</h4>
-                <p>11월 14일 발행</p>
-            </div>*/}
-
-            {
-                modal == 'show' ? <Modal/> : null
-            }
 
             {
                 title.map(function (a, b) {
                     return (
                         <div className={"list"} key={b}>
-                            <h4>{a} <span onClick={() => {likeCounting(b)}}>👍</span> {like[b]}</h4>
+                            <h4 onClick={(e) => {modalOpen(); setModalTitle(b); }}>{a} <span onClick={(e) => {likeCounting(b); e.stopPropagation()}}>👍</span> {like[b]}</h4>
                             <p>10월 31일 발행</p>
+                            <button type={"button"} style={{marginTop: '10px'}} onClick={() => {
+                                const titleCopy = [...title].filter((item) =>{
+                                  return item !== a;
+                                })
+                                change(titleCopy);
+                            }}>게시글 삭제</button>
                         </div>
                     )
                 })
+            }
+
+            <div style={{display:"flex",justifyContent:"center",marginTop:"20px"}}>
+                <input type={"text"} onChange={ (e) => {setValue(e.target.value)}  }></input>
+                <button type={"button"} onClick={
+                    () => {
+                        change(title => [...title, inputVal])
+                    }
+                }>게시글 추가</button>
+            </div>
+            {
+                modal == 'show' ? <Modal title={title} modalTitle ={modalTitle} /> : null
             }
 
         </div>
     );
 }
 
-function Modal() {
+// 현재 Modal 은 App 에서 그려지고 있기 때문에, 서로 부모와 자식 관게가 성립된다. 그리고 부모에 선언된 state 를 사용하기 위해서는
+// props 를 사용하면 된다.
+function Modal(props) {
     return (
         <div className="modal">
-            <h4>제목</h4>
+            <h4>{props.title[props.modalTitle]}</h4>
             <p>날짜</p>
             <p>상세내용</p>
+            <button type={"button"}>수정하기</button>
         </div>
     )
 }
